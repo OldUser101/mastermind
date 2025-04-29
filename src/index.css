@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#game-container, #controls {
+    width: clamp(200px, 33vmin, 400px);
+}
+
+#game-container {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    height: clamp(400px, 67vmin, 800px);
+}
+
+@media (max-width: 768px) {
+    #game-container, #controls {
+        width: min(65vmin, calc(90vh * (33 / 90)));
+    }
+
+    #game-container {
+        height: auto; 
+        aspect-ratio: 33 / 67;
+    }
+}
