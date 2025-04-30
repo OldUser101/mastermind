@@ -8,6 +8,8 @@ export enum PegState {
     Black
 }
 
+const CHARS: string[] = ["🔴", "🔵", "🟢", "🟡", "⚪", "⚫"];
+
 export class Peg {
     public state: PegState;
     private _maxState: number;
@@ -23,5 +25,12 @@ export class Peg {
 
     public reset() {
         this.state = 0;
+    }
+
+    public getChar() {
+        if (this.state === 0) {
+            return "";
+        }
+        return CHARS[this.state - 1];
     }
 }

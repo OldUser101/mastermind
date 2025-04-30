@@ -1,3 +1,5 @@
+"use client";
+
 import { Peg } from "./Peg";
 
 const colors: string[] = [

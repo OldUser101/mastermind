@@ -1,3 +1,5 @@
+"use client";
+
 import { CodePeg } from "./CodePeg";
 
 interface Props {
