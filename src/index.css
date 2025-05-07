@@ -15,7 +15,7 @@
 
 @media (max-width: 768px) {
     #game-container, #controls {
-        width: min(65vmin, calc(90vh * (33 / 90)));
+        width: min(65vmin, calc(80vh * (33 / 90)));
     }
 
     #game-container {

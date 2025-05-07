@@ -26,6 +26,8 @@ export default function App() {
 
     const [playingGame, setPlayingGame] = useState<boolean>(true);
 
+    const [resultText, setResultText] = useState<string>("");
+
     const [codePegs, setCodePegs] = useState<CodePeg[][]>(() => 
         Array.from({ length: rows }, () => (
             Array.from({ length: cols }, () => new CodePeg(CodePegState.None))
@@ -41,8 +43,12 @@ export default function App() {
 
     const handleCheck = () => {
         let newCodePegs = [...codePegs];
+        let win: boolean = true;
         currentCode.check(pegs.slice(currentRow * 4, (currentRow + 1) * 4)).map((c, i) => {
             newCodePegs[currentRow][i] = c;
+            if (c.state !== CodePegState.Black) {
+                win = false;
+            }
         })
         setCodePegs(newCodePegs);
 
@@ -50,6 +56,14 @@ export default function App() {
             setPlayingGame(false);
         } else {
             setCurrentRow(currentRow - 1);
+        }
+
+        if (!win && currentRow === 0) {
+            setResultText(`${currentCode.getString()}`);
+        }
+
+        if (win) {
+            setResultText("You Win!");
         }
 
         setCheckAllowed(false);
@@ -65,6 +79,7 @@ export default function App() {
         setCurrentRow(9);
         setCheckAllowed(false);
         setPlayingGame(true);
+        setResultText("");
         setDisabled(() => {
             const newDisabled = Array.from({length: rows * 4}, () => true);
             for (let i = currentRow * 4; i < (currentRow + 1) * 4; i++) {
@@ -100,7 +115,7 @@ export default function App() {
             for (let j = i * 4; j < (i + 1) * 4; j++) {
                 line += pegs[j].getChar()
             }
-            text += line + "\n";
+            text += line + ((i == 9) ? "" : "\n");
         }
         shareResult(text, "");
     };
@@ -139,6 +154,9 @@ export default function App() {
             <h1 className="font-bold text-3xl mb-5">
                 Mastermind
             </h1>
+            <p className="font-semibold text-xl mb-5">
+                {resultText}
+            </p>
             <div className="bg-gradient-to-tr from-neutral-400 to-neutral-300 p-4 rounded-xl text-black shadow-2xl">
                 <div id="game-container" className="grid gap-4 p-2">
                     {Array.from({length: rows}).map((_, row) => (

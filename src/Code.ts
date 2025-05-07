@@ -1,6 +1,8 @@
 import { Peg, PegState } from "./Peg";
 import { CodePeg, CodePegState } from "./CodePeg";
 
+const CHARS: string[] = ["🔴", "🔵", "🟢", "🟡", "⚪", "⚫"];
+
 export class Code {
     private state: PegState[];
     public gameover: boolean;
@@ -10,6 +12,14 @@ export class Code {
             return Math.floor(Math.random() * 6) + 1;
         })
         this.gameover = false;
+    }
+
+    public getString() {
+        let line: string = "";
+        for (let i = 0; i < this.state.length; i++) {
+            line += CHARS[this.state[i] - 1];
+        }
+        return line;
     }
 
     public check(pegs: Peg[]) {
